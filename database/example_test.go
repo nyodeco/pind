@@ -14,7 +14,7 @@ import (
 	"github.com/nyodeco/pind/database"
 	_ "github.com/nyodeco/pind/database/ffldb"
 	"github.com/nyodeco/pind/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/nyodeco/pinutil"
 )
 
 // This example demonstrates creating a new database.
@@ -136,7 +136,7 @@ func Example_blockStorageAndRetrieval() {
 	// and example.
 	err = db.Update(func(tx database.Tx) error {
 		genesisBlock := chaincfg.MainNetParams.GenesisBlock
-		return tx.StoreBlock(btcutil.NewBlock(genesisBlock))
+		return tx.StoreBlock(pinutil.NewBlock(genesisBlock))
 	})
 	if err != nil {
 		fmt.Println(err)

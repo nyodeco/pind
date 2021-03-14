@@ -14,7 +14,7 @@ import (
 	"github.com/nyodeco/pind/chaincfg"
 	"github.com/nyodeco/pind/database"
 	"github.com/nyodeco/pind/database/ffldb"
-	"github.com/btcsuite/btcutil"
+	"github.com/nyodeco/pinutil"
 )
 
 // dbType is the database type name for this driver.
@@ -170,7 +170,7 @@ func TestPersistence(t *testing.T) {
 		"b1key2": "foo2",
 		"b1key3": "foo3",
 	}
-	genesisBlock := btcutil.NewBlock(chaincfg.MainNetParams.GenesisBlock)
+	genesisBlock := pinutil.NewBlock(chaincfg.MainNetParams.GenesisBlock)
 	genesisHash := chaincfg.MainNetParams.GenesisHash
 	err = db.Update(func(tx database.Tx) error {
 		metadataBucket := tx.Metadata()

@@ -12,9 +12,9 @@ import (
 	"github.com/nyodeco/pind/chaincfg/chainhash"
 	"github.com/nyodeco/pind/database"
 	"github.com/nyodeco/pind/wire"
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcutil/gcs"
-	"github.com/btcsuite/btcutil/gcs/builder"
+	"github.com/nyodeco/pinutil"
+	"github.com/nyodeco/pinutil/gcs"
+	"github.com/nyodeco/pinutil/gcs/builder"
 )
 
 const (
@@ -149,7 +149,7 @@ func (idx *CfIndex) Create(dbTx database.Tx) error {
 
 // storeFilter stores a given filter, and performs the steps needed to
 // generate the filter's header.
-func storeFilter(dbTx database.Tx, block *btcutil.Block, f *gcs.Filter,
+func storeFilter(dbTx database.Tx, block *pinutil.Block, f *gcs.Filter,
 	filterType wire.FilterType) error {
 	if uint8(filterType) > maxFilterType {
 		return errors.New("unsupported filter type")
@@ -209,7 +209,7 @@ func storeFilter(dbTx database.Tx, block *btcutil.Block, f *gcs.Filter,
 // ConnectBlock is invoked by the index manager when a new block has been
 // connected to the main chain. This indexer adds a hash-to-cf mapping for
 // every passed block. This is part of the Indexer interface.
-func (idx *CfIndex) ConnectBlock(dbTx database.Tx, block *btcutil.Block,
+func (idx *CfIndex) ConnectBlock(dbTx database.Tx, block *pinutil.Block,
 	stxos []blockchain.SpentTxOut) error {
 
 	prevScripts := make([][]byte, len(stxos))
@@ -228,7 +228,7 @@ func (idx *CfIndex) ConnectBlock(dbTx database.Tx, block *btcutil.Block,
 // DisconnectBlock is invoked by the index manager when a block has been
 // disconnected from the main chain.  This indexer removes the hash-to-cf
 // mapping for every passed block. This is part of the Indexer interface.
-func (idx *CfIndex) DisconnectBlock(dbTx database.Tx, block *btcutil.Block,
+func (idx *CfIndex) DisconnectBlock(dbTx database.Tx, block *pinutil.Block,
 	_ []blockchain.SpentTxOut) error {
 
 	for _, key := range cfIndexKeys {

@@ -15,7 +15,7 @@ import (
 	"github.com/nyodeco/pind/chaincfg/chainhash"
 	"github.com/nyodeco/pind/database"
 	"github.com/nyodeco/pind/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/nyodeco/pinutil"
 )
 
 // importCmd defines the configuration options for the insecureimport command.
@@ -108,7 +108,7 @@ func (bi *blockImporter) readBlock() ([]byte, error) {
 // NOTE: This is not a safe import as it does not verify chain rules.
 func (bi *blockImporter) processBlock(serializedBlock []byte) (bool, error) {
 	// Deserialize the block which includes checks for malformed blocks.
-	block, err := btcutil.NewBlockFromBytes(serializedBlock)
+	block, err := pinutil.NewBlockFromBytes(serializedBlock)
 	if err != nil {
 		return false, err
 	}

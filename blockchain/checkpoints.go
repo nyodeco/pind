@@ -11,7 +11,7 @@ import (
 	"github.com/nyodeco/pind/chaincfg"
 	"github.com/nyodeco/pind/chaincfg/chainhash"
 	"github.com/nyodeco/pind/txscript"
-	"github.com/btcsuite/btcutil"
+	"github.com/nyodeco/pinutil"
 )
 
 // CheckpointConfirmations is the number of blocks before the end of the current
@@ -169,7 +169,7 @@ func (b *BlockChain) findPreviousCheckpoint() (*blockNode, error) {
 
 // isNonstandardTransaction determines whether a transaction contains any
 // scripts which are not one of the standard types.
-func isNonstandardTransaction(tx *btcutil.Tx) bool {
+func isNonstandardTransaction(tx *pinutil.Tx) bool {
 	// Check all of the output public key scripts for non-standard scripts.
 	for _, txOut := range tx.MsgTx().TxOut {
 		scriptClass := txscript.GetScriptClass(txOut.PkScript)
@@ -197,7 +197,7 @@ func isNonstandardTransaction(tx *btcutil.Tx) bool {
 // decision and then manually added to the list of checkpoints for a network.
 //
 // This function is safe for concurrent access.
-func (b *BlockChain) IsCheckpointCandidate(block *btcutil.Block) (bool, error) {
+func (b *BlockChain) IsCheckpointCandidate(block *pinutil.Block) (bool, error) {
 	b.chainLock.RLock()
 	defer b.chainLock.RUnlock()
 

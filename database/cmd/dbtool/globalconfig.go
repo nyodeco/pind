@@ -14,11 +14,11 @@ import (
 	"github.com/nyodeco/pind/database"
 	_ "github.com/nyodeco/pind/database/ffldb"
 	"github.com/nyodeco/pind/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/nyodeco/pinutil"
 )
 
 var (
-	btcdHomeDir     = btcutil.AppDataDir("btcd", false)
+	btcdHomeDir     = pinutil.AppDataDir("btcd", false)
 	knownDbTypes    = database.SupportedDrivers()
 	activeNetParams = &chaincfg.MainNetParams
 

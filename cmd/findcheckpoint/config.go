@@ -13,7 +13,7 @@ import (
 	"github.com/nyodeco/pind/database"
 	_ "github.com/nyodeco/pind/database/ffldb"
 	"github.com/nyodeco/pind/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/nyodeco/pinutil"
 	flags "github.com/jessevdk/go-flags"
 )
 
@@ -25,7 +25,7 @@ const (
 )
 
 var (
-	btcdHomeDir     = btcutil.AppDataDir("btcd", false)
+	btcdHomeDir     = pinutil.AppDataDir("btcd", false)
 	defaultDataDir  = filepath.Join(btcdHomeDir, "data")
 	knownDbTypes    = database.SupportedDrivers()
 	activeNetParams = &chaincfg.MainNetParams

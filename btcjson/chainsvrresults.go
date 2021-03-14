@@ -11,7 +11,7 @@ import (
 
 	"github.com/nyodeco/pind/chaincfg/chainhash"
 
-	"github.com/btcsuite/btcutil"
+	"github.com/nyodeco/pinutil"
 	"github.com/nyodeco/pind/wire"
 )
 
@@ -449,7 +449,7 @@ type GetTxOutSetInfoResult struct {
 	BogoSize       int64          `json:"bogosize"`
 	HashSerialized chainhash.Hash `json:"hash_serialized_2"`
 	DiskSize       int64          `json:"disk_size"`
-	TotalAmount    btcutil.Amount `json:"total_amount"`
+	TotalAmount    pinutil.Amount `json:"total_amount"`
 }
 
 // UnmarshalJSON unmarshals the result of the gettxoutsetinfo JSON-RPC call
@@ -488,7 +488,7 @@ func (g *GetTxOutSetInfoResult) UnmarshalJSON(data []byte) error {
 
 	g.HashSerialized = *serializedHash
 
-	amount, err := btcutil.NewAmount(aux.TotalAmount)
+	amount, err := pinutil.NewAmount(aux.TotalAmount)
 	if err != nil {
 		return err
 	}
@@ -784,7 +784,7 @@ type rawFundRawTransactionResult struct {
 // FundRawTransactionResult is the result of the fundrawtransaction JSON-RPC call
 type FundRawTransactionResult struct {
 	Transaction    *wire.MsgTx
-	Fee            btcutil.Amount
+	Fee            pinutil.Amount
 	ChangePosition int // the position of the added change output, or -1
 }
 
@@ -809,7 +809,7 @@ func (f *FundRawTransactionResult) UnmarshalJSON(data []byte) error {
 		}
 	}
 
-	fee, err := btcutil.NewAmount(rawRes.Fee)
+	fee, err := pinutil.NewAmount(rawRes.Fee)
 	if err != nil {
 		return err
 	}

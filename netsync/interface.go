@@ -11,7 +11,7 @@ import (
 	"github.com/nyodeco/pind/mempool"
 	"github.com/nyodeco/pind/peer"
 	"github.com/nyodeco/pind/wire"
-	"github.com/btcsuite/btcutil"
+	"github.com/nyodeco/pinutil"
 )
 
 // PeerNotifier exposes methods to notify peers of status changes to
@@ -24,7 +24,7 @@ type PeerNotifier interface {
 
 	RelayInventory(invVect *wire.InvVect, data interface{})
 
-	TransactionConfirmed(tx *btcutil.Tx)
+	TransactionConfirmed(tx *pinutil.Tx)
 }
 
 // Config is a configuration struct used to initialize a new SyncManager.
