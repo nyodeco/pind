@@ -10,7 +10,7 @@ require (
 	github.com/decred/dcrd/lru v1.1.0
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/jrick/logrotate v1.0.0
-	github.com/nyodeco/pinutil v0.0.0-20210314133537-d4746329be4f // indirect
+	github.com/nyodeco/pinutil v0.0.0-20210314135707-ad20866ed4a1
 	golang.org/x/crypto v0.0.0-20210220033148-5ea612d1eb83
 )
 

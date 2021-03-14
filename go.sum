@@ -45,6 +45,7 @@ github.com/kkdai/bstream v0.0.0-20161212061736-f391b8402d23 h1:FOOIBWrEkLgmlgGfM
 github.com/kkdai/bstream v0.0.0-20161212061736-f391b8402d23/go.mod h1:J+Gs4SYgM6CZQHDETBtE9HaSEkGmuNXF86RwHhHUvq4=
 github.com/kkdai/bstream v1.0.0/go.mod h1:FDnDOHt5Yx4p3FaHcioFT0QjDOtgUpvjeZqAs+NVZZA=
 github.com/nyodeco/pind v0.0.0-20210313110534-fee7301628fb/go.mod h1:k1uQifqmskGFnQvUUHrJeqksDhmMWudnOos/F6UsJMU=
+github.com/nyodeco/pind v0.0.0-20210314135146-c28020601c89/go.mod h1:8L6BwvpHAILoGZpLveLiDq0GRW8attDBzy6Ny0qIgNw=
 github.com/nyodeco/pind v0.20.1-beta h1:Ik4hyJqN8Jfyv3S4AGBOmyouMsYE3EdYODkMbQjwPGw=
 github.com/nyodeco/pind v0.20.1-beta/go.mod h1:wVuoA8VJLEcwgqHBwHmzLRazpKxTv13Px/pDuV7OomQ=
 github.com/nyodeco/pinutil v0.0.0-20190425235716-9e5f4b9a998d h1:yJzD/yFppdVCf6ApMkVy8cUxV0XrxdP9rVf6D87/Mng=
@@ -53,6 +54,8 @@ github.com/nyodeco/pinutil v0.0.0-20210313104722-555f15246602 h1:R6C6UP6HOc+ElKZ
 github.com/nyodeco/pinutil v0.0.0-20210313104722-555f15246602/go.mod h1:AXXAW6R4AncDdiZCYfIvhTz0Ges5TytGsWzgQKKv7nc=
 github.com/nyodeco/pinutil v0.0.0-20210314133537-d4746329be4f h1:i+ir6+wSIhwHpMtirON2TzExhpzRlpVUiifwW3+Kwz4=
 github.com/nyodeco/pinutil v0.0.0-20210314133537-d4746329be4f/go.mod h1:kSikfRk5MKitso7eJMYUBPRUy7OdM9pgz3mqKWWsIaU=
+github.com/nyodeco/pinutil v0.0.0-20210314135707-ad20866ed4a1 h1:/dXw7gyTgWNR2E4I9MSiXVK5rloZhRAJ3x6c2OQedSE=
+github.com/nyodeco/pinutil v0.0.0-20210314135707-ad20866ed4a1/go.mod h1:eU6xwMETXG17ryeOOS6R+IMOputPKt/UmOcCAANfrTE=
 github.com/nyodeco/pinutil v1.0.2 h1:9iZ1Terx9fMIOtq1VrwdqfsATL9MC2l8ZrUY6YZ2uts=
 github.com/nyodeco/pinutil v1.0.2/go.mod h1:j9HUFwoQRsZL3V4n+qG+CUnEGHOarIxfC3Le2Yhbcts=
 github.com/onsi/ginkgo v1.6.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
