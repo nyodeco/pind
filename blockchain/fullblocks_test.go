@@ -12,14 +12,14 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/btcsuite/btcd/blockchain"
-	"github.com/btcsuite/btcd/blockchain/fullblocktests"
-	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcd/database"
-	_ "github.com/btcsuite/btcd/database/ffldb"
-	"github.com/btcsuite/btcd/txscript"
-	"github.com/btcsuite/btcd/wire"
+	"github.com/nyodeco/pind/blockchain"
+	"github.com/nyodeco/pind/blockchain/fullblocktests"
+	"github.com/nyodeco/pind/chaincfg"
+	"github.com/nyodeco/pind/chaincfg/chainhash"
+	"github.com/nyodeco/pind/database"
+	_ "github.com/nyodeco/pind/database/ffldb"
+	"github.com/nyodeco/pind/txscript"
+	"github.com/nyodeco/pind/wire"
 	"github.com/btcsuite/btcutil"
 )
 
