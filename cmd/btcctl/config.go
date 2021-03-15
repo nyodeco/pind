@@ -15,7 +15,7 @@ import (
 
 	"github.com/nyodeco/pinutil"
 	flags "github.com/jessevdk/go-flags"
-	"github.com/nyodeco/pind/btcjson"
+	"github.com/nyodeco/pind/pinjson"
 	"github.com/nyodeco/pind/chaincfg"
 )
 
@@ -23,7 +23,7 @@ const (
 	// unusableFlags are the command usage flags which this utility are not
 	// able to use.  In particular it doesn't support websockets and
 	// consequently notifications.
-	unusableFlags = btcjson.UFWebsocketOnly | btcjson.UFNotification
+	unusableFlags = pinjson.UFWebsocketOnly | pinjson.UFNotification
 )
 
 var (
@@ -46,10 +46,10 @@ func listCommands() {
 	)
 
 	// Get a list of registered commands and categorize and filter them.
-	cmdMethods := btcjson.RegisteredCmdMethods()
+	cmdMethods := pinjson.RegisteredCmdMethods()
 	categorized := make([][]string, numCategories)
 	for _, method := range cmdMethods {
-		flags, err := btcjson.MethodUsageFlags(method)
+		flags, err := pinjson.MethodUsageFlags(method)
 		if err != nil {
 			// This should never happen since the method was just
 			// returned from the package, but be safe.
@@ -61,7 +61,7 @@ func listCommands() {
 			continue
 		}
 
-		usage, err := btcjson.MethodUsageText(method)
+		usage, err := pinjson.MethodUsageText(method)
 		if err != nil {
 			// This should never happen since the method was just
 			// returned from the package, but be safe.
@@ -70,7 +70,7 @@ func listCommands() {
 
 		// Categorize the command based on the usage flags.
 		category := categoryChain
-		if flags&btcjson.UFWalletOnly != 0 {
+		if flags&pinjson.UFWalletOnly != 0 {
 			category = categoryWallet
 		}
 		categorized[category] = append(categorized[category], usage)

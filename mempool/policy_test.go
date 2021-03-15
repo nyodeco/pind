@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/nyodeco/pind/btcec"
+	"github.com/nyodeco/pind/pinec"
 	"github.com/nyodeco/pind/chaincfg"
 	"github.com/nyodeco/pind/chaincfg/chainhash"
 	"github.com/nyodeco/pind/txscript"
@@ -98,7 +98,7 @@ func TestCalcMinRequiredTxRelayFee(t *testing.T) {
 func TestCheckPkScriptStandard(t *testing.T) {
 	var pubKeys [][]byte
 	for i := 0; i < 4; i++ {
-		pk, err := btcec.NewPrivateKey(btcec.S256())
+		pk, err := pinec.NewPrivateKey(pinec.S256())
 		if err != nil {
 			t.Fatalf("TestCheckPkScriptStandard NewPrivateKey failed: %v",
 				err)

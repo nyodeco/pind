@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/nyodeco/pind/btcec"
+	"github.com/nyodeco/pind/pinec"
 	"github.com/nyodeco/pind/chaincfg"
 	"github.com/nyodeco/pind/wire"
 	"github.com/nyodeco/pinutil"
@@ -20,7 +20,7 @@ const (
 	//   Signature hash type (1 byte)
 	//   Public key length (1 byte)
 	//   Public key (33 byte)
-	minPubKeyHashSigScriptLen = 1 + btcec.MinSigLen + 1 + 1 + 33
+	minPubKeyHashSigScriptLen = 1 + pinec.MinSigLen + 1 + 1 + 33
 
 	// maxPubKeyHashSigScriptLen is the maximum length of a signature script
 	// that spends a P2PKH output. The length is composed of the following:
@@ -190,7 +190,7 @@ func computeNonWitnessPkScript(sigScript []byte) (PkScript, error) {
 		// signature script. We'll attempt to parse it to ensure this is
 		// a P2PKH redeem script.
 		pubKey := sigScript[len(sigScript)-compressedPubKeyLen:]
-		if btcec.IsCompressedPubKey(pubKey) {
+		if pinec.IsCompressedPubKey(pubKey) {
 			pubKeyHash := hash160(pubKey)
 			script, err := payToPubKeyHashScript(pubKeyHash)
 			if err != nil {

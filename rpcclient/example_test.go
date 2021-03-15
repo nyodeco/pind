@@ -6,7 +6,7 @@ package rpcclient
 
 import (
 	"fmt"
-	"github.com/nyodeco/pind/btcjson"
+	"github.com/nyodeco/pind/pinjson"
 )
 
 var connCfg = &ConnConfig{
@@ -41,18 +41,18 @@ func ExampleClient_ImportMulti() {
 	}
 	defer client.Shutdown()
 
-	requests := []btcjson.ImportMultiRequest{
+	requests := []pinjson.ImportMultiRequest{
 		{
-			Descriptor: btcjson.String(
+			Descriptor: pinjson.String(
 				"pkh([f34db33f/44'/0'/0']xpub6Cc939fyHvfB9pPLWd3bSyyQFvgKbwhidca49jGCM5Hz5ypEPGf9JVXB4NBuUfPgoHnMjN6oNgdC9KRqM11RZtL8QLW6rFKziNwHDYhZ6Kx/0/*)#ed7px9nu"),
-			Range:     &btcjson.DescriptorRange{Value: []int{0, 100}},
-			Timestamp: btcjson.TimestampOrNow{Value: 0}, // scan from genesis
-			WatchOnly: btcjson.Bool(true),
-			KeyPool:   btcjson.Bool(false),
-			Internal:  btcjson.Bool(false),
+			Range:     &pinjson.DescriptorRange{Value: []int{0, 100}},
+			Timestamp: pinjson.TimestampOrNow{Value: 0}, // scan from genesis
+			WatchOnly: pinjson.Bool(true),
+			KeyPool:   pinjson.Bool(false),
+			Internal:  pinjson.Bool(false),
 		},
 	}
-	opts := &btcjson.ImportMultiOptions{Rescan: true}
+	opts := &pinjson.ImportMultiOptions{Rescan: true}
 
 	resp, err := client.ImportMulti(requests, opts)
 	if err != nil {
@@ -72,7 +72,7 @@ func ExampleClient_DeriveAddresses() {
 
 	addrs, err := client.DeriveAddresses(
 		"pkh([f34db33f/44'/0'/0']xpub6Cc939fyHvfB9pPLWd3bSyyQFvgKbwhidca49jGCM5Hz5ypEPGf9JVXB4NBuUfPgoHnMjN6oNgdC9KRqM11RZtL8QLW6rFKziNwHDYhZ6Kx/0/*)#ed7px9nu",
-		&btcjson.DescriptorRange{Value: []int{0, 2}})
+		&pinjson.DescriptorRange{Value: []int{0, 2}})
 	if err != nil {
 		panic(err)
 	}

@@ -19,7 +19,7 @@ import (
 	"time"
 
 	"github.com/nyodeco/pind/blockchain"
-	"github.com/nyodeco/pind/btcec"
+	"github.com/nyodeco/pind/pinec"
 	"github.com/nyodeco/pind/chaincfg"
 	"github.com/nyodeco/pind/chaincfg/chainhash"
 	"github.com/nyodeco/pind/txscript"
@@ -192,13 +192,13 @@ type testGenerator struct {
 	prevCollectedHash chainhash.Hash
 
 	// Common key for any tests which require signed transactions.
-	privKey *btcec.PrivateKey
+	privKey *pinec.PrivateKey
 }
 
 // makeTestGenerator returns a test generator instance initialized with the
 // genesis block as the tip.
 func makeTestGenerator(params *chaincfg.Params) (testGenerator, error) {
-	privKey, _ := btcec.PrivKeyFromBytes(btcec.S256(), []byte{0x01})
+	privKey, _ := pinec.PrivKeyFromBytes(pinec.S256(), []byte{0x01})
 	genesis := params.GenesisBlock
 	genesisHash := genesis.BlockHash()
 	return testGenerator{

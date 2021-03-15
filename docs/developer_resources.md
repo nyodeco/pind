@@ -8,7 +8,7 @@
 * The btcsuite Bitcoin-related Go Packages:
   * [btcrpcclient](https://github.com/nyodeco/pind/tree/master/rpcclient) - Implements a
     robust and easy to use Websocket-enabled Bitcoin JSON-RPC client
-  * [btcjson](https://github.com/nyodeco/pind/tree/master/btcjson) - Provides an extensive API
+  * [pinjson](https://github.com/nyodeco/pind/tree/master/pinjson) - Provides an extensive API
     for the underlying JSON-RPC command and return values
   * [wire](https://github.com/nyodeco/pind/tree/master/wire) - Implements the
     Bitcoin wire protocol
@@ -20,7 +20,7 @@
     Provides a set of block tests for testing the consensus validation rules
   * [txscript](https://github.com/nyodeco/pind/tree/master/txscript) -
     Implements the Bitcoin transaction scripting language
-  * [btcec](https://github.com/nyodeco/pind/tree/master/btcec) - Implements
+  * [pinec](https://github.com/nyodeco/pind/tree/master/pinec) - Implements
     support for the elliptic curve cryptographic functions needed for the
     Bitcoin scripts
   * [database](https://github.com/nyodeco/pind/tree/master/database) -

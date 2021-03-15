@@ -15,7 +15,7 @@ import (
 	"time"
 
 	"github.com/nyodeco/pind/blockchain"
-	"github.com/nyodeco/pind/btcec"
+	"github.com/nyodeco/pind/pinec"
 	"github.com/nyodeco/pind/chaincfg"
 	"github.com/nyodeco/pind/chaincfg/chainhash"
 	"github.com/nyodeco/pind/integration/rpctest"
@@ -31,11 +31,11 @@ const (
 // makeTestOutput creates an on-chain output paying to a freshly generated
 // p2pkh output with the specified amount.
 func makeTestOutput(r *rpctest.Harness, t *testing.T,
-	amt pinutil.Amount) (*btcec.PrivateKey, *wire.OutPoint, []byte, error) {
+	amt pinutil.Amount) (*pinec.PrivateKey, *wire.OutPoint, []byte, error) {
 
 	// Create a fresh key, then send some coins to an address spendable by
 	// that key.
-	key, err := btcec.NewPrivateKey(btcec.S256())
+	key, err := pinec.NewPrivateKey(pinec.S256())
 	if err != nil {
 		return nil, nil, nil, err
 	}

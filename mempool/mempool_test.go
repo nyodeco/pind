@@ -13,7 +13,7 @@ import (
 	"time"
 
 	"github.com/nyodeco/pind/blockchain"
-	"github.com/nyodeco/pind/btcec"
+	"github.com/nyodeco/pind/pinec"
 	"github.com/nyodeco/pind/chaincfg"
 	"github.com/nyodeco/pind/chaincfg/chainhash"
 	"github.com/nyodeco/pind/txscript"
@@ -132,7 +132,7 @@ type poolHarness struct {
 	//
 	// payAddr is the p2sh address for the signing key and is used for the
 	// payment address throughout the tests.
-	signKey     *btcec.PrivateKey
+	signKey     *pinec.PrivateKey
 	payAddr     pinutil.Address
 	payScript   []byte
 	chainParams *chaincfg.Params
@@ -291,7 +291,7 @@ func newPoolHarness(chainParams *chaincfg.Params) (*poolHarness, []spendableOutp
 	if err != nil {
 		return nil, nil, err
 	}
-	signKey, signPub := btcec.PrivKeyFromBytes(btcec.S256(), keyBytes)
+	signKey, signPub := pinec.PrivKeyFromBytes(pinec.S256(), keyBytes)
 
 	// Generate associated pay-to-script-hash address and resulting payment
 	// script.

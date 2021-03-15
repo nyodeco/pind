@@ -10,7 +10,7 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/nyodeco/pind/btcjson"
+	"github.com/nyodeco/pind/pinjson"
 	"github.com/btcsuite/go-socks/socks"
 )
 
@@ -116,7 +116,7 @@ func sendPostRequest(marshalledJSON []byte, cfg *config) ([]byte, error) {
 	}
 
 	// Unmarshal the response.
-	var resp btcjson.Response
+	var resp pinjson.Response
 	if err := json.Unmarshal(respBytes, &resp); err != nil {
 		return nil, err
 	}

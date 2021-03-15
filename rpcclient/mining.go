@@ -9,7 +9,7 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/nyodeco/pind/btcjson"
+	"github.com/nyodeco/pind/pinjson"
 	"github.com/nyodeco/pind/chaincfg/chainhash"
 	"github.com/nyodeco/pinutil"
 )
@@ -52,7 +52,7 @@ func (r FutureGenerateResult) Receive() ([]*chainhash.Hash, error) {
 //
 // See Generate for the blocking version and more details.
 func (c *Client) GenerateAsync(numBlocks uint32) FutureGenerateResult {
-	cmd := btcjson.NewGenerateCmd(numBlocks)
+	cmd := pinjson.NewGenerateCmd(numBlocks)
 	return c.sendCmd(cmd)
 }
 
@@ -99,7 +99,7 @@ func (f FutureGenerateToAddressResult) Receive() ([]*chainhash.Hash, error) {
 //
 // See GenerateToAddress for the blocking version and more details.
 func (c *Client) GenerateToAddressAsync(numBlocks int64, address pinutil.Address, maxTries *int64) FutureGenerateToAddressResult {
-	cmd := btcjson.NewGenerateToAddressCmd(numBlocks, address.EncodeAddress(), maxTries)
+	cmd := pinjson.NewGenerateToAddressCmd(numBlocks, address.EncodeAddress(), maxTries)
 	return c.sendCmd(cmd)
 }
 
@@ -136,7 +136,7 @@ func (r FutureGetGenerateResult) Receive() (bool, error) {
 //
 // See GetGenerate for the blocking version and more details.
 func (c *Client) GetGenerateAsync() FutureGetGenerateResult {
-	cmd := btcjson.NewGetGenerateCmd()
+	cmd := pinjson.NewGetGenerateCmd()
 	return c.sendCmd(cmd)
 }
 
@@ -162,7 +162,7 @@ func (r FutureSetGenerateResult) Receive() error {
 //
 // See SetGenerate for the blocking version and more details.
 func (c *Client) SetGenerateAsync(enable bool, numCPUs int) FutureSetGenerateResult {
-	cmd := btcjson.NewSetGenerateCmd(enable, &numCPUs)
+	cmd := pinjson.NewSetGenerateCmd(enable, &numCPUs)
 	return c.sendCmd(cmd)
 }
 
@@ -200,7 +200,7 @@ func (r FutureGetHashesPerSecResult) Receive() (int64, error) {
 //
 // See GetHashesPerSec for the blocking version and more details.
 func (c *Client) GetHashesPerSecAsync() FutureGetHashesPerSecResult {
-	cmd := btcjson.NewGetHashesPerSecCmd()
+	cmd := pinjson.NewGetHashesPerSecCmd()
 	return c.sendCmd(cmd)
 }
 
@@ -217,14 +217,14 @@ type FutureGetMiningInfoResult chan *response
 
 // Receive waits for the response promised by the future and returns the mining
 // information.
-func (r FutureGetMiningInfoResult) Receive() (*btcjson.GetMiningInfoResult, error) {
+func (r FutureGetMiningInfoResult) Receive() (*pinjson.GetMiningInfoResult, error) {
 	res, err := receiveFuture(r)
 	if err != nil {
 		return nil, err
 	}
 
 	// Unmarshal result as a getmininginfo result object.
-	var infoResult btcjson.GetMiningInfoResult
+	var infoResult pinjson.GetMiningInfoResult
 	err = json.Unmarshal(res, &infoResult)
 	if err != nil {
 		return nil, err
@@ -239,12 +239,12 @@ func (r FutureGetMiningInfoResult) Receive() (*btcjson.GetMiningInfoResult, erro
 //
 // See GetMiningInfo for the blocking version and more details.
 func (c *Client) GetMiningInfoAsync() FutureGetMiningInfoResult {
-	cmd := btcjson.NewGetMiningInfoCmd()
+	cmd := pinjson.NewGetMiningInfoCmd()
 	return c.sendCmd(cmd)
 }
 
 // GetMiningInfo returns mining information.
-func (c *Client) GetMiningInfo() (*btcjson.GetMiningInfoResult, error) {
+func (c *Client) GetMiningInfo() (*pinjson.GetMiningInfoResult, error) {
 	return c.GetMiningInfoAsync().Receive()
 }
 
@@ -277,7 +277,7 @@ func (r FutureGetNetworkHashPS) Receive() (int64, error) {
 //
 // See GetNetworkHashPS for the blocking version and more details.
 func (c *Client) GetNetworkHashPSAsync() FutureGetNetworkHashPS {
-	cmd := btcjson.NewGetNetworkHashPSCmd(nil, nil)
+	cmd := pinjson.NewGetNetworkHashPSCmd(nil, nil)
 	return c.sendCmd(cmd)
 }
 
@@ -296,7 +296,7 @@ func (c *Client) GetNetworkHashPS() (int64, error) {
 //
 // See GetNetworkHashPS2 for the blocking version and more details.
 func (c *Client) GetNetworkHashPS2Async(blocks int) FutureGetNetworkHashPS {
-	cmd := btcjson.NewGetNetworkHashPSCmd(&blocks, nil)
+	cmd := pinjson.NewGetNetworkHashPSCmd(&blocks, nil)
 	return c.sendCmd(cmd)
 }
 
@@ -317,7 +317,7 @@ func (c *Client) GetNetworkHashPS2(blocks int) (int64, error) {
 //
 // See GetNetworkHashPS3 for the blocking version and more details.
 func (c *Client) GetNetworkHashPS3Async(blocks, height int) FutureGetNetworkHashPS {
-	cmd := btcjson.NewGetNetworkHashPSCmd(&blocks, &height)
+	cmd := pinjson.NewGetNetworkHashPSCmd(&blocks, &height)
 	return c.sendCmd(cmd)
 }
 
@@ -337,14 +337,14 @@ type FutureGetWork chan *response
 
 // Receive waits for the response promised by the future and returns the hash
 // data to work on.
-func (r FutureGetWork) Receive() (*btcjson.GetWorkResult, error) {
+func (r FutureGetWork) Receive() (*pinjson.GetWorkResult, error) {
 	res, err := receiveFuture(r)
 	if err != nil {
 		return nil, err
 	}
 
 	// Unmarshal result as a getwork result object.
-	var result btcjson.GetWorkResult
+	var result pinjson.GetWorkResult
 	err = json.Unmarshal(res, &result)
 	if err != nil {
 		return nil, err
@@ -359,14 +359,14 @@ func (r FutureGetWork) Receive() (*btcjson.GetWorkResult, error) {
 //
 // See GetWork for the blocking version and more details.
 func (c *Client) GetWorkAsync() FutureGetWork {
-	cmd := btcjson.NewGetWorkCmd(nil)
+	cmd := pinjson.NewGetWorkCmd(nil)
 	return c.sendCmd(cmd)
 }
 
 // GetWork returns hash data to work on.
 //
 // See GetWorkSubmit to submit the found solution.
-func (c *Client) GetWork() (*btcjson.GetWorkResult, error) {
+func (c *Client) GetWork() (*pinjson.GetWorkResult, error) {
 	return c.GetWorkAsync().Receive()
 }
 
@@ -398,7 +398,7 @@ func (r FutureGetWorkSubmit) Receive() (bool, error) {
 //
 // See GetWorkSubmit for the blocking version and more details.
 func (c *Client) GetWorkSubmitAsync(data string) FutureGetWorkSubmit {
-	cmd := btcjson.NewGetWorkCmd(&data)
+	cmd := pinjson.NewGetWorkCmd(&data)
 	return c.sendCmd(cmd)
 }
 
@@ -441,7 +441,7 @@ func (r FutureSubmitBlockResult) Receive() error {
 // returned instance.
 //
 // See SubmitBlock for the blocking version and more details.
-func (c *Client) SubmitBlockAsync(block *pinutil.Block, options *btcjson.SubmitBlockOptions) FutureSubmitBlockResult {
+func (c *Client) SubmitBlockAsync(block *pinutil.Block, options *pinjson.SubmitBlockOptions) FutureSubmitBlockResult {
 	blockHex := ""
 	if block != nil {
 		blockBytes, err := block.Bytes()
@@ -452,12 +452,12 @@ func (c *Client) SubmitBlockAsync(block *pinutil.Block, options *btcjson.SubmitB
 		blockHex = hex.EncodeToString(blockBytes)
 	}
 
-	cmd := btcjson.NewSubmitBlockCmd(blockHex, options)
+	cmd := pinjson.NewSubmitBlockCmd(blockHex, options)
 	return c.sendCmd(cmd)
 }
 
 // SubmitBlock attempts to submit a new block into the bitcoin network.
-func (c *Client) SubmitBlock(block *pinutil.Block, options *btcjson.SubmitBlockOptions) error {
+func (c *Client) SubmitBlock(block *pinutil.Block, options *pinjson.SubmitBlockOptions) error {
 	return c.SubmitBlockAsync(block, options).Receive()
 }
 
@@ -467,14 +467,14 @@ type FutureGetBlockTemplateResponse chan *response
 
 // Receive waits for the response promised by the future and returns an error if
 // any occurred when retrieving the block template.
-func (r FutureGetBlockTemplateResponse) Receive() (*btcjson.GetBlockTemplateResult, error) {
+func (r FutureGetBlockTemplateResponse) Receive() (*pinjson.GetBlockTemplateResult, error) {
 	res, err := receiveFuture(r)
 	if err != nil {
 		return nil, err
 	}
 
 	// Unmarshal result as a getwork result object.
-	var result btcjson.GetBlockTemplateResult
+	var result pinjson.GetBlockTemplateResult
 	err = json.Unmarshal(res, &result)
 	if err != nil {
 		return nil, err
@@ -488,12 +488,12 @@ func (r FutureGetBlockTemplateResponse) Receive() (*btcjson.GetBlockTemplateResu
 // returned instance.
 //
 // See GetBlockTemplate for the blocking version and more details.
-func (c *Client) GetBlockTemplateAsync(req *btcjson.TemplateRequest) FutureGetBlockTemplateResponse {
-	cmd := btcjson.NewGetBlockTemplateCmd(req)
+func (c *Client) GetBlockTemplateAsync(req *pinjson.TemplateRequest) FutureGetBlockTemplateResponse {
+	cmd := pinjson.NewGetBlockTemplateCmd(req)
 	return c.sendCmd(cmd)
 }
 
 // GetBlockTemplate returns a new block template for mining.
-func (c *Client) GetBlockTemplate(req *btcjson.TemplateRequest) (*btcjson.GetBlockTemplateResult, error) {
+func (c *Client) GetBlockTemplate(req *pinjson.TemplateRequest) (*pinjson.GetBlockTemplateResult, error) {
 	return c.GetBlockTemplateAsync(req).Receive()
 }

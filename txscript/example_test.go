@@ -8,7 +8,7 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	"github.com/nyodeco/pind/btcec"
+	"github.com/nyodeco/pind/pinec"
 	"github.com/nyodeco/pind/chaincfg"
 	"github.com/nyodeco/pind/chaincfg/chainhash"
 	"github.com/nyodeco/pind/txscript"
@@ -89,7 +89,7 @@ func ExampleSignTxOutput() {
 		fmt.Println(err)
 		return
 	}
-	privKey, pubKey := btcec.PrivKeyFromBytes(btcec.S256(), privKeyBytes)
+	privKey, pubKey := pinec.PrivKeyFromBytes(pinec.S256(), privKeyBytes)
 	pubKeyHash := pinutil.Hash160(pubKey.SerializeCompressed())
 	addr, err := pinutil.NewAddressPubKeyHash(pubKeyHash,
 		&chaincfg.MainNetParams)
@@ -130,7 +130,7 @@ func ExampleSignTxOutput() {
 	redeemTx.AddTxOut(txOut)
 
 	// Sign the redeeming transaction.
-	lookupKey := func(a pinutil.Address) (*btcec.PrivateKey, bool, error) {
+	lookupKey := func(a pinutil.Address) (*pinec.PrivateKey, bool, error) {
 		// Ordinarily this function would involve looking up the private
 		// key for the provided address, but since the only thing being
 		// signed in this example uses the address associated with the

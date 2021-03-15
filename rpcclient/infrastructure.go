@@ -25,7 +25,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/nyodeco/pind/btcjson"
+	"github.com/nyodeco/pind/pinjson"
 	"github.com/nyodeco/pind/chaincfg"
 	"github.com/btcsuite/go-socks/socks"
 	"github.com/btcsuite/websocket"
@@ -275,10 +275,10 @@ func (c *Client) trackRegisteredNtfns(cmd interface{}) {
 	defer c.ntfnStateLock.Unlock()
 
 	switch bcmd := cmd.(type) {
-	case *btcjson.NotifyBlocksCmd:
+	case *pinjson.NotifyBlocksCmd:
 		c.ntfnState.notifyBlocks = true
 
-	case *btcjson.NotifyNewTransactionsCmd:
+	case *pinjson.NotifyNewTransactionsCmd:
 		if bcmd.Verbose != nil && *bcmd.Verbose {
 			c.ntfnState.notifyNewTxVerbose = true
 		} else {
@@ -286,12 +286,12 @@ func (c *Client) trackRegisteredNtfns(cmd interface{}) {
 
 		}
 
-	case *btcjson.NotifySpentCmd:
+	case *pinjson.NotifySpentCmd:
 		for _, op := range bcmd.OutPoints {
 			c.ntfnState.notifySpent[op] = struct{}{}
 		}
 
-	case *btcjson.NotifyReceivedCmd:
+	case *pinjson.NotifyReceivedCmd:
 		for _, addr := range bcmd.Addresses {
 			c.ntfnState.notifyReceived[addr] = struct{}{}
 		}
@@ -327,7 +327,7 @@ func (r FutureGetBulkResult) Receive() (BulkResult, error) {
 // from a bulk json rpc api
 type IndividualBulkResult struct {
 	Result interface{}       `json:"result"`
-	Error  *btcjson.RPCError `json:"error"`
+	Error  *pinjson.RPCError `json:"error"`
 	Id     uint64            `json:"id"`
 }
 
@@ -354,7 +354,7 @@ type rawNotification struct {
 // to be valid (according to JSON-RPC 1.0 spec), ID may not be nil.
 type rawResponse struct {
 	Result json.RawMessage   `json:"result"`
-	Error  *btcjson.RPCError `json:"error"`
+	Error  *pinjson.RPCError `json:"error"`
 }
 
 // response is the raw bytes of a JSON-RPC result, or the error if the response
@@ -365,7 +365,7 @@ type response struct {
 }
 
 // result checks whether the unmarshaled response contains a non-nil error,
-// returning an unmarshaled btcjson.RPCError (or an unmarshaling error) if so.
+// returning an unmarshaled pinjson.RPCError (or an unmarshaling error) if so.
 // If the response is not an error, the raw bytes of the request are
 // returned for further unmashaling into specific result types.
 func (r rawResponse) result() (result []byte, err error) {
@@ -597,7 +597,7 @@ func (c *Client) reregisterNtfns() error {
 	// outpoints in one command if needed.
 	nslen := len(stateCopy.notifySpent)
 	if nslen > 0 {
-		outpoints := make([]btcjson.OutPoint, 0, nslen)
+		outpoints := make([]pinjson.OutPoint, 0, nslen)
 		for op := range stateCopy.notifySpent {
 			outpoints = append(outpoints, op)
 		}
@@ -966,19 +966,19 @@ func (c *Client) sendRequest(jReq *jsonRequest) {
 // future.  It handles both websocket and HTTP POST mode depending on the
 // configuration of the client.
 func (c *Client) sendCmd(cmd interface{}) chan *response {
-	rpcVersion := btcjson.RpcVersion1
+	rpcVersion := pinjson.RpcVersion1
 	if c.batch {
-		rpcVersion = btcjson.RpcVersion2
+		rpcVersion = pinjson.RpcVersion2
 	}
 	// Get the method associated with the command.
-	method, err := btcjson.CmdMethod(cmd)
+	method, err := pinjson.CmdMethod(cmd)
 	if err != nil {
 		return newFutureError(err)
 	}
 
 	// Marshal the command.
 	id := c.NextID()
-	marshalledJSON, err := btcjson.MarshalCmd(rpcVersion, id, cmd)
+	marshalledJSON, err := pinjson.MarshalCmd(rpcVersion, id, cmd)
 	if err != nil {
 		return newFutureError(err)
 	}
@@ -1595,8 +1595,8 @@ func (c *Client) BackendVersion() (BackendVersion, error) {
 
 	// Inspect the RPC error to ensure the method was not found, otherwise
 	// we actually ran into an error.
-	case *btcjson.RPCError:
-		if err.Code != btcjson.ErrRPCMethodNotFound.Code {
+	case *pinjson.RPCError:
+		if err.Code != pinjson.ErrRPCMethodNotFound.Code {
 			return 0, fmt.Errorf("unable to detect btcd version: "+
 				"%v", err)
 		}

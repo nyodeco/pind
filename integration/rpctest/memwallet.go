@@ -11,9 +11,9 @@ import (
 	"sync"
 
 	"github.com/nyodeco/pind/blockchain"
-	"github.com/nyodeco/pind/btcec"
 	"github.com/nyodeco/pind/chaincfg"
 	"github.com/nyodeco/pind/chaincfg/chainhash"
+	"github.com/nyodeco/pind/pinec"
 	"github.com/nyodeco/pind/rpcclient"
 	"github.com/nyodeco/pind/txscript"
 	"github.com/nyodeco/pind/wire"
@@ -71,7 +71,7 @@ type undoEntry struct {
 // wallet functionality to the harness. The wallet uses a hard-coded HD key
 // hierarchy which promotes reproducibility between harness test runs.
 type memWallet struct {
-	coinbaseKey  *btcec.PrivateKey
+	coinbaseKey  *pinec.PrivateKey
 	coinbaseAddr pinutil.Address
 
 	// hdRoot is the root master private key for the wallet.
@@ -581,7 +581,7 @@ func (m *memWallet) ConfirmedBalance() pinutil.Amount {
 }
 
 // keyToAddr maps the passed private to corresponding p2pkh address.
-func keyToAddr(key *btcec.PrivateKey, net *chaincfg.Params) (pinutil.Address, error) {
+func keyToAddr(key *pinec.PrivateKey, net *chaincfg.Params) (pinutil.Address, error) {
 	serializedKey := key.PubKey().SerializeCompressed()
 	pubKeyAddr, err := pinutil.NewAddressPubKey(serializedKey, net)
 	if err != nil {
