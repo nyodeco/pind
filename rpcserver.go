@@ -766,6 +766,7 @@ func createTxRawResult(chainParams *chaincfg.Params, mtx *wire.MsgTx,
 		Vout:     createVoutList(mtx, chainParams, nil),
 		Version:  mtx.Version,
 		LockTime: mtx.LockTime,
+		PinData:  string(mtx.PinData),
 	}
 
 	if blkHeader != nil {
@@ -808,6 +809,7 @@ func handleDecodeRawTransaction(s *rpcServer, cmd interface{}, closeChan <-chan 
 		Locktime: mtx.LockTime,
 		Vin:      createVinList(&mtx),
 		Vout:     createVoutList(&mtx, s.cfg.ChainParams, nil),
+		PinData:  string(mtx.PinData),
 	}
 	return txReply, nil
 }

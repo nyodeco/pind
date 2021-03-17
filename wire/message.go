@@ -72,6 +72,10 @@ const (
 	// using the default Bitcoin wire protocol specification. For transaction
 	// messages, the new encoding format detailed in BIP0144 will be used.
 	WitnessEncoding
+
+	// OmitPinDataEncoding encodes transaction messages without PinData
+	// for use in signature generation legacy compatibility with Pin v0.10.4
+	OmitPinDataEncoding
 )
 
 // LatestEncoding is the most recently specified encoding for the Bitcoin wire

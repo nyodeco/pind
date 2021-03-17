@@ -28,6 +28,7 @@ const (
 	SigHashAll          SigHashType = 0x1
 	SigHashNone         SigHashType = 0x2
 	SigHashSingle       SigHashType = 0x3
+	SigHashOmitPinData  SigHashType = 1 << 6
 	SigHashAnyOneCanPay SigHashType = 0x80
 
 	// sigHashMask defines the number of bits of the hash type which is used
@@ -569,6 +570,9 @@ func CalcSignatureHash(script []byte, hashType SigHashType, tx *wire.MsgTx, idx 
 // engine instance, calculate the signature hash to be used for signing and
 // verification.
 func calcSignatureHash(script []parsedOpcode, hashType SigHashType, tx *wire.MsgTx, idx int) []byte {
+	omitPinData := hashType&SigHashOmitPinData != 0
+	hashType &= ^SigHashOmitPinData
+
 	// The SigHashSingle signature type signs only the corresponding input
 	// and output (the output with the same index number as the input).
 	//
@@ -655,7 +659,11 @@ func calcSignatureHash(script []parsedOpcode, hashType SigHashType, tx *wire.Msg
 	// transaction and the hash type (encoded as a 4-byte little-endian
 	// value) appended.
 	wbuf := bytes.NewBuffer(make([]byte, 0, txCopy.SerializeSizeStripped()+4))
-	txCopy.SerializeNoWitness(wbuf)
+	if omitPinData {
+		txCopy.SerializeNoPinData(wbuf)
+	} else {
+		txCopy.SerializeNoWitness(wbuf)
+	}
 	binary.Write(wbuf, binary.LittleEndian, hashType)
 	return chainhash.DoubleHashB(wbuf.Bytes())
 }

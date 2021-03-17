@@ -317,7 +317,7 @@ type MsgTx struct {
 	TxIn     []*TxIn
 	TxOut    []*TxOut
 	LockTime uint32
-	PinData string
+	PinData  []byte
 }
 
 // AddTxIn adds a transaction input to the message.
@@ -608,7 +608,7 @@ func (msg *MsgTx) PinDecode(r io.Reader, pver uint32, enc MessageEncoding) error
 
 	// Check if PinData has err
 	if msg.Version >= 2 {
-		msg.PinData, err = ReadVarString(r, pver)
+		msg.PinData, err = ReadVarBytes(r, pver, 1<<32-1, "")
 		if err != nil {
 			returnScriptBuffers()
 			return err
@@ -716,6 +716,9 @@ func (msg *MsgTx) DeserializeNoWitness(r io.Reader) error {
 // See Serialize for encoding transactions to be stored to disk, such as in a
 // database, as opposed to encoding transactions for the wire.
 func (msg *MsgTx) PinEncode(w io.Writer, pver uint32, enc MessageEncoding) error {
+	OmitPinData := enc&OmitPinDataEncoding != 0
+	enc &= ^OmitPinDataEncoding
+
 	err := binarySerializer.PutUint32(w, littleEndian, uint32(msg.Version))
 	if err != nil {
 		return err
@@ -774,7 +777,20 @@ func (msg *MsgTx) PinEncode(w io.Writer, pver uint32, enc MessageEncoding) error
 		}
 	}
 
-	return binarySerializer.PutUint32(w, littleEndian, msg.LockTime)
+	err = binarySerializer.PutUint32(w, littleEndian, msg.LockTime)
+	if err != nil {
+		return err
+	}
+
+	// Add PinData
+	if msg.Version >= 2 && !OmitPinData {
+		err = WriteVarBytes(w, pver, msg.PinData)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 // HasWitness returns false if none of the inputs within the transaction
@@ -816,6 +832,12 @@ func (msg *MsgTx) Serialize(w io.Writer) error {
 // data, the old serialization format will still be used.
 func (msg *MsgTx) SerializeNoWitness(w io.Writer) error {
 	return msg.PinEncode(w, 0, BaseEncoding)
+}
+
+// SerializeNoPinData encodes the transaction to w in an identical manner to
+// Serialize, however it will omit the FloData field.
+func (msg *MsgTx) SerializeNoPinData(w io.Writer) error {
+	return msg.PinEncode(w, 0, BaseEncoding|OmitPinDataEncoding)
 }
 
 // baseSize returns the serialized size of the transaction without accounting
