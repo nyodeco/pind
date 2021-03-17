@@ -818,16 +818,18 @@ func (r FutureSearchRawTransactionsVerboseResult) Receive() ([]*pinjson.SearchRa
 //
 // See SearchRawTransactionsVerbose for the blocking version and more details.
 func (c *Client) SearchRawTransactionsVerboseAsync(address pinutil.Address, skip,
-	count int, includePrevOut, reverse bool, filterAddrs *[]string) FutureSearchRawTransactionsVerboseResult {
+	count int, includePrevOut, reverse bool, filterAddrs []string) FutureSearchRawTransactionsVerboseResult {
 
 	addr := address.EncodeAddress()
 	verbose := pinjson.Int(1)
 	var prevOut *int
 	if includePrevOut {
 		prevOut = pinjson.Int(1)
+	} else if reverse || filterAddrs != nil {
+		prevOut = pinjson.Int(0)
 	}
 	cmd := pinjson.NewSearchRawTransactionsCmd(addr, verbose, &skip, &count,
-		prevOut, &reverse, filterAddrs)
+		prevOut, &reverse, &filterAddrs)
 	return c.sendCmd(cmd)
 }
 
@@ -842,7 +844,7 @@ func (c *Client) SearchRawTransactionsVerbose(address pinutil.Address, skip,
 	count int, includePrevOut, reverse bool, filterAddrs []string) ([]*pinjson.SearchRawTransactionsResult, error) {
 
 	return c.SearchRawTransactionsVerboseAsync(address, skip, count,
-		includePrevOut, reverse, &filterAddrs).Receive()
+		includePrevOut, reverse, filterAddrs).Receive()
 }
 
 // FutureDecodeScriptResult is a future promise to deliver the result
