@@ -506,6 +506,11 @@ func calcWitnessSignatureHash(subScript []parsedOpcode, sigHashes *TxSigHashes,
 	var bLockTime [4]byte
 	binary.LittleEndian.PutUint32(bLockTime[:], tx.LockTime)
 	sigHash.Write(bLockTime[:])
+	if tx.Version >= 2 {
+		var bPinData bytes.Buffer
+		wire.WriteVarBytes(&bPinData, 0, tx.PinData)
+		sigHash.Write(bPinData.Bytes())
+	}
 	var bHashType [4]byte
 	binary.LittleEndian.PutUint32(bHashType[:], uint32(hashType))
 	sigHash.Write(bHashType[:])
@@ -552,6 +557,7 @@ func shallowCopyTx(tx *wire.MsgTx) wire.MsgTx {
 		txOuts[i] = *oldTxOut
 		txCopy.TxOut[i] = &txOuts[i]
 	}
+	txCopy.PinData = tx.PinData
 	return txCopy
 }
 

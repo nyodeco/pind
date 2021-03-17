@@ -2181,7 +2181,7 @@ func opcodeCheckSig(op *parsedOpcode, vm *Engine) error {
 		// to sign itself.
 		subScript = removeOpcodeByData(subScript, fullSigBytes)
 
-		hash = calcSignatureHash(subScript, hashType, &vm.tx, vm.txIdx)
+		hash = calcSignatureHash(subScript, hashType|SigHashOmitPinData, &vm.tx, vm.txIdx)
 	}
 
 	pubKey, err := pinec.ParsePubKey(pkBytes, pinec.S256())
@@ -2215,6 +2215,22 @@ func opcodeCheckSig(op *parsedOpcode, vm *Engine) error {
 		}
 	} else {
 		valid = signature.Verify(hash, pubKey)
+	}
+
+	if !valid {
+		hash = calcSignatureHash(subScript, hashType, &vm.tx, vm.txIdx)
+		if vm.sigCache != nil {
+			var sigHash chainhash.Hash
+			copy(sigHash[:], hash)
+
+			valid = vm.sigCache.Exists(sigHash, signature, pubKey)
+			if !valid && signature.Verify(hash, pubKey) {
+				vm.sigCache.Add(sigHash, signature, pubKey)
+				valid = true
+			}
+		} else {
+			valid = signature.Verify(hash, pubKey)
+		}
 	}
 
 	if !valid && vm.hasFlag(ScriptVerifyNullFail) && len(sigBytes) > 0 {
