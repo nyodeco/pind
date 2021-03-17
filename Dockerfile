@@ -1,12 +1,12 @@
-# This Dockerfile builds btcd from source and creates a small (55 MB) docker container based on alpine linux.
+# This Dockerfile builds pind from source and creates a small (55 MB) docker container based on alpine linux.
 #
-# Clone this repository and run the following command to build and tag a fresh btcd amd64 container:
+# Clone this repository and run the following command to build and tag a fresh pind amd64 container:
 #
-# docker build . -t yourregistry/btcd
+# docker build . -t yourregistry/pind
 #
 # You can use the following command to buid an arm64v8 container:
 #
-# docker build . -t yourregistry/btcd --build-arg ARCH=arm64v8
+# docker build . -t yourregistry/pind --build-arg ARCH=arm64v8
 #
 # For more information how to use this docker image visit:
 # https://github.com/nyodeco/pind/tree/master/docs
@@ -34,8 +34,8 @@ FROM $ARCH/alpine:3.12
 
 COPY --from=build-container /go/bin /bin
 
-VOLUME ["/root/.btcd"]
+VOLUME ["/root/.pind"]
 
 EXPOSE 8333 8334
 
-ENTRYPOINT ["btcd"]
+ENTRYPOINT ["pind"]

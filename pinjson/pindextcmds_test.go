@@ -15,11 +15,11 @@ import (
 	"github.com/nyodeco/pind/pinjson"
 )
 
-// TestBtcdExtCmds tests all of the btcd extended commands marshal and unmarshal
+// TestPindExtCmds tests all of the pind extended commands marshal and unmarshal
 // into valid results include handling of optional fields being omitted in the
 // marshalled command, while optional fields with defaults have the default
 // assigned on unmarshalled commands.
-func TestBtcdExtCmds(t *testing.T) {
+func TestPindExtCmds(t *testing.T) {
 	t.Parallel()
 
 	testID := int(1)

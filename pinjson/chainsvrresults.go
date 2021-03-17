@@ -754,7 +754,7 @@ type TxRawDecodeResult struct {
 // validateaddress command.
 //
 // Compared to the Bitcoin Core version, this struct lacks the scriptPubKey
-// field since it requires wallet access, which is outside the scope of btcd.
+// field since it requires wallet access, which is outside the scope of pind.
 // Ref: https://bitcoincore.org/en/doc/0.20.0/rpc/util/validateaddress/
 type ValidateAddressChainResult struct {
 	IsValid        bool    `json:"isvalid"`

@@ -31,9 +31,9 @@ func main() {
 		},
 	}
 
-	// Connect to local btcd RPC server using websockets.
-	btcdHomeDir := pinutil.AppDataDir("btcd", false)
-	certs, err := ioutil.ReadFile(filepath.Join(btcdHomeDir, "rpc.cert"))
+	// Connect to local pind RPC server using websockets.
+	pindHomeDir := pinutil.AppDataDir("pind", false)
+	certs, err := ioutil.ReadFile(filepath.Join(pindHomeDir, "rpc.cert"))
 	if err != nil {
 		log.Fatal(err)
 	}

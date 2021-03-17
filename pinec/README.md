@@ -13,7 +13,7 @@ on work from ThePiachu which is licensed under the same terms as Go, but it has
 signficantly diverged since then.  The btcsuite developers original is licensed
 under the liberal ISC license.
 
-Although this package was primarily written for btcd, it has intentionally been
+Although this package was primarily written for pind, it has intentionally been
 designed so it can be used as a standalone package for any projects needing to
 use secp256k1 elliptic curve cryptography.
 

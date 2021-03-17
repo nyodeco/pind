@@ -18,8 +18,8 @@ from recommonmark.transform import AutoStructify
 
 # -- Project information -----------------------------------------------------
 
-project = 'btcd'
-copyright = '2020, btcd'
+project = 'pind'
+copyright = '2020, pind'
 author = 'btcsuite developers'
 
 # The full version, including alpha/beta/rc tags

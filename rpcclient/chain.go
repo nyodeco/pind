@@ -84,7 +84,7 @@ func (c *Client) waitForGetBlockRes(respChan chan *response, hash string,
 	res, err := receiveFuture(respChan)
 
 	// If we receive an invalid parameter error, then we may be
-	// communicating with a btcd node which only understands the legacy
+	// communicating with a pind node which only understands the legacy
 	// request, so we'll try that.
 	if err, ok := err.(*pinjson.RPCError); ok &&
 		err.Code == pinjson.ErrRPCInvalidParams.Code {

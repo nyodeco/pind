@@ -2,12 +2,12 @@
 
 ## IRC
 
-* [irc.freenode.net](irc://irc.freenode.net), channel `#btcd`
+* [irc.freenode.net](irc://irc.freenode.net), channel `#pind`
 
 ## Mailing Lists
 
-* [btcd](mailto:btcd+subscribe@opensource.conformal.com): discussion of btcd and its packages.
-* [btcd-commits](mailto:btcd-commits+subscribe@opensource.conformal.com): readonly mail-out of source code changes.
+* [pind](mailto:pind+subscribe@opensource.conformal.com): discussion of pind and its packages.
+* [pind-commits](mailto:pind-commits+subscribe@opensource.conformal.com): readonly mail-out of source code changes.
 
 ## Issue Tracker
 

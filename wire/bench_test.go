@@ -404,7 +404,7 @@ func BenchmarkDecodeGetHeaders(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		r.Seek(0, 0)
-		msg.BtcDecode(r, pver, LatestEncoding)
+		msg.PinDecode(r, pver, LatestEncoding)
 	}
 }
 
@@ -434,7 +434,7 @@ func BenchmarkDecodeHeaders(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		r.Seek(0, 0)
-		msg.BtcDecode(r, pver, LatestEncoding)
+		msg.PinDecode(r, pver, LatestEncoding)
 	}
 }
 
@@ -464,7 +464,7 @@ func BenchmarkDecodeGetBlocks(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		r.Seek(0, 0)
-		msg.BtcDecode(r, pver, LatestEncoding)
+		msg.PinDecode(r, pver, LatestEncoding)
 	}
 }
 
@@ -491,7 +491,7 @@ func BenchmarkDecodeAddr(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		r.Seek(0, 0)
-		msg.BtcDecode(r, pver, LatestEncoding)
+		msg.PinDecode(r, pver, LatestEncoding)
 	}
 }
 
@@ -521,7 +521,7 @@ func BenchmarkDecodeInv(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		r.Seek(0, 0)
-		msg.BtcDecode(r, pver, LatestEncoding)
+		msg.PinDecode(r, pver, LatestEncoding)
 	}
 }
 
@@ -551,7 +551,7 @@ func BenchmarkDecodeNotFound(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		r.Seek(0, 0)
-		msg.BtcDecode(r, pver, LatestEncoding)
+		msg.PinDecode(r, pver, LatestEncoding)
 	}
 }
 
@@ -589,7 +589,7 @@ func BenchmarkDecodeMerkleBlock(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		r.Seek(0, 0)
-		msg.BtcDecode(r, pver, LatestEncoding)
+		msg.PinDecode(r, pver, LatestEncoding)
 	}
 }
 

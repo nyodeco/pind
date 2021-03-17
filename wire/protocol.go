@@ -138,8 +138,8 @@ func (f ServiceFlag) String() string {
 	return s
 }
 
-// BitcoinNet represents which bitcoin network a message belongs to.
-type BitcoinNet uint32
+// PinNet represents which bitcoin network a message belongs to.
+type PinNet uint32
 
 // Constants used to indicate the message bitcoin network.  They can also be
 // used to seek to the next message when a stream's state is unknown, but
@@ -147,32 +147,32 @@ type BitcoinNet uint32
 // better idea to simply disconnect clients that are misbehaving over TCP.
 const (
 	// MainNet represents the main bitcoin network.
-	MainNet BitcoinNet = 0xf1a5c0fd
+	MainNet PinNet = 0xf1a5c0fd
 
 	// TestNet represents the regression test network.
-	TestNet BitcoinNet = 0xdab5bffa
+	TestNet PinNet = 0xdab5bffa
 
 	// TestNet3 represents the test network (version 3).
-	TestNet3 BitcoinNet = 0xf25ac0fd
+	TestNet3 PinNet = 0xf25ac0fd
 
 	// SimNet represents the simulation test network.
-	SimNet BitcoinNet = 0x12141c16
+	SimNet PinNet = 0x12141c16
 )
 
 // bnStrings is a map of bitcoin networks back to their constant names for
 // pretty printing.
-var bnStrings = map[BitcoinNet]string{
+var bnStrings = map[PinNet]string{
 	MainNet:  "MainNet",
 	TestNet:  "TestNet",
 	TestNet3: "TestNet3",
 	SimNet:   "SimNet",
 }
 
-// String returns the BitcoinNet in human-readable form.
-func (n BitcoinNet) String() string {
+// String returns the PinNet in human-readable form.
+func (n PinNet) String() string {
 	if s, ok := bnStrings[n]; ok {
 		return s
 	}
 
-	return fmt.Sprintf("Unknown BitcoinNet (%d)", uint32(n))
+	return fmt.Sprintf("Unknown PinNet (%d)", uint32(n))
 }

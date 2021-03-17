@@ -12,10 +12,10 @@ import (
 	"github.com/nyodeco/pind/pinjson"
 )
 
-// TestBtcdExtCustomResults ensures any results that have custom marshalling
+// TestPindExtCustomResults ensures any results that have custom marshalling
 // work as inteded.
 // and unmarshal code of results are as expected.
-func TestBtcdExtCustomResults(t *testing.T) {
+func TestPindExtCustomResults(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {

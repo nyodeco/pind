@@ -1,6 +1,6 @@
 # Installation
 
-The first step is to install btcd.  See one of the following sections for
+The first step is to install pind.  See one of the following sections for
 details on how to install on the supported operating systems.
 
 ## Requirements
@@ -31,8 +31,8 @@ verify the signature perform the following:
 
 ## Windows Installation
 
-* Install the MSI available at: [btcd windows installer](https://github.com/nyodeco/pind/releases)
-* Launch btcd from the Start Menu
+* Install the MSI available at: [pind windows installer](https://github.com/nyodeco/pind/releases)
+* Launch pind from the Start Menu
 
 ## Linux/BSD/MacOSX/POSIX Installation
 
@@ -49,7 +49,7 @@ recommended that `GOPATH` is set to a directory in your home directory such as
 `~/goprojects` to avoid write permission issues.  It is also recommended to add
 `$GOPATH/bin` to your `PATH` at this point.
 
-* Run the following commands to obtain btcd, all dependencies, and install it:
+* Run the following commands to obtain pind, all dependencies, and install it:
 
 ```bash
 git clone https://github.com/nyodeco/pind $GOPATH/src/github.com/nyodeco/pind
@@ -57,19 +57,19 @@ cd $GOPATH/src/github.com/nyodeco/pind
 GO111MODULE=on go install -v . ./cmd/...
 ```
 
-* btcd (and utilities) will now be installed in ```$GOPATH/bin```.  If you did
+* pind (and utilities) will now be installed in ```$GOPATH/bin```.  If you did
   not already add the bin directory to your system path during Go installation,
   we recommend you do so now.
 
 ## Gentoo Linux Installation
 
 * [Install Layman](https://gitlab.com/bitcoin/gentoo) and enable the Bitcoin overlay.
-* Copy or symlink `/var/lib/layman/bitcoin/Documentation/package.keywords/btcd-live` to `/etc/portage/package.keywords/`
-* Install btcd: `$ emerge net-p2p/btcd`
+* Copy or symlink `/var/lib/layman/bitcoin/Documentation/package.keywords/pind-live` to `/etc/portage/package.keywords/`
+* Install pind: `$ emerge net-p2p/pind`
 
 ## Startup
 
-Typically btcd will run and start downloading the block chain with no extra
+Typically pind will run and start downloading the block chain with no extra
 configuration necessary, however, there is an optional method to use a
 `bootstrap.dat` file that may speed up the initial block chain download process.
 

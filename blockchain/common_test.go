@@ -59,7 +59,7 @@ func isSupportedDbType(dbType string) bool {
 
 // loadBlocks reads files containing bitcoin block data (gzipped but otherwise
 // in the format bitcoind writes) from disk and returns them as an array of
-// pinutil.Block.  This is largely borrowed from the test code in btcdb.
+// pinutil.Block.  This is largely borrowed from the test code in pindb.
 func loadBlocks(filename string) (blocks []*pinutil.Block, err error) {
 	filename = filepath.Join("testdata/", filename)
 

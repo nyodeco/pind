@@ -5,7 +5,7 @@
 # Use of this source code is governed by an ISC
 # license that can be found in the LICENSE file.
 
-# Simple bash script to build basic btcd tools for all the platforms we support
+# Simple bash script to build basic pind tools for all the platforms we support
 # with the golang cross-compiler.
 
 set -e
@@ -22,7 +22,7 @@ fi
 go mod vendor
 tar -cvzf vendor.tar.gz vendor
 
-PACKAGE=btcd
+PACKAGE=pind
 MAINDIR=$PACKAGE-$TAG
 mkdir -p $MAINDIR
 
@@ -93,7 +93,7 @@ for i in $SYS; do
 
     echo "Building:" $OS $ARCH $ARM
     env CGO_ENABLED=0 GOOS=$OS GOARCH=$ARCH GOARM=$ARM go build -v -trimpath -ldflags="-s -w -buildid=" github.com/nyodeco/pind
-    env CGO_ENABLED=0 GOOS=$OS GOARCH=$ARCH GOARM=$ARM go build -v -trimpath -ldflags="-s -w -buildid=" github.com/nyodeco/pind/cmd/btcctl
+    env CGO_ENABLED=0 GOOS=$OS GOARCH=$ARCH GOARM=$ARM go build -v -trimpath -ldflags="-s -w -buildid=" github.com/nyodeco/pind/cmd/pinctl
     cd ..
 
     if [[ $OS = "windows" ]]; then

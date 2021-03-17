@@ -7,12 +7,12 @@ database
 
 Package database provides a block and metadata storage database.
 
-Please note that this package is intended to enable btcd to support different
+Please note that this package is intended to enable pind to support different
 database backends and is not something that a client can directly access as only
 one entity can have the database open at a time (for most database backends),
-and that entity will be btcd.
+and that entity will be pind.
 
-When a client wants programmatic access to the data provided by btcd, they'll
+When a client wants programmatic access to the data provided by pind, they'll
 likely want to use the [rpcclient](https://github.com/nyodeco/pind/tree/master/rpcclient)
 package which makes use of the [JSON-RPC API](https://github.com/nyodeco/pind/tree/master/docs/json_rpc_api.md).
 
