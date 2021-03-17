@@ -354,7 +354,7 @@ func (msg *MsgAlert) BtcDecode(r io.Reader, pver uint32, enc MessageEncoding) er
 
 // BtcEncode encodes the receiver to w using the bitcoin protocol encoding.
 // This is part of the Message interface implementation.
-func (msg *MsgAlert) BtcEncode(w io.Writer, pver uint32, enc MessageEncoding) error {
+func (msg *MsgAlert) PinEncode(w io.Writer, pver uint32, enc MessageEncoding) error {
 	var err error
 	var serializedpayload []byte
 	if msg.Payload != nil {
@@ -373,7 +373,7 @@ func (msg *MsgAlert) BtcEncode(w io.Writer, pver uint32, enc MessageEncoding) er
 	}
 	slen := uint64(len(serializedpayload))
 	if slen == 0 {
-		return messageError("MsgAlert.BtcEncode", "empty serialized payload")
+		return messageError("MsgAlert.PinEncode", "empty serialized payload")
 	}
 	err = WriteVarBytes(w, pver, serializedpayload)
 	if err != nil {

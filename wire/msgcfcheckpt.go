@@ -92,7 +92,7 @@ func (msg *MsgCFCheckpt) BtcDecode(r io.Reader, pver uint32, _ MessageEncoding) 
 
 // BtcEncode encodes the receiver to w using the bitcoin protocol encoding.
 // This is part of the Message interface implementation.
-func (msg *MsgCFCheckpt) BtcEncode(w io.Writer, pver uint32, _ MessageEncoding) error {
+func (msg *MsgCFCheckpt) PinEncode(w io.Writer, pver uint32, _ MessageEncoding) error {
 	// Write filter type
 	err := writeElement(w, msg.FilterType)
 	if err != nil {

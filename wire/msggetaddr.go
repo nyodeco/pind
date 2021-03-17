@@ -24,7 +24,7 @@ func (msg *MsgGetAddr) BtcDecode(r io.Reader, pver uint32, enc MessageEncoding) 
 
 // BtcEncode encodes the receiver to w using the bitcoin protocol encoding.
 // This is part of the Message interface implementation.
-func (msg *MsgGetAddr) BtcEncode(w io.Writer, pver uint32, enc MessageEncoding) error {
+func (msg *MsgGetAddr) PinEncode(w io.Writer, pver uint32, enc MessageEncoding) error {
 	return nil
 }
 

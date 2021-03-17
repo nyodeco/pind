@@ -31,11 +31,11 @@ func (msg *MsgSendHeaders) BtcDecode(r io.Reader, pver uint32, enc MessageEncodi
 
 // BtcEncode encodes the receiver to w using the bitcoin protocol encoding.
 // This is part of the Message interface implementation.
-func (msg *MsgSendHeaders) BtcEncode(w io.Writer, pver uint32, enc MessageEncoding) error {
+func (msg *MsgSendHeaders) PinEncode(w io.Writer, pver uint32, enc MessageEncoding) error {
 	if pver < SendHeadersVersion {
 		str := fmt.Sprintf("sendheaders message invalid for protocol "+
 			"version %d", pver)
-		return messageError("MsgSendHeaders.BtcEncode", str)
+		return messageError("MsgSendHeaders.PinEncode", str)
 	}
 
 	return nil

@@ -97,7 +97,7 @@ func (msg *MsgCFHeaders) BtcDecode(r io.Reader, pver uint32, _ MessageEncoding) 
 
 // BtcEncode encodes the receiver to w using the bitcoin protocol encoding.
 // This is part of the Message interface implementation.
-func (msg *MsgCFHeaders) BtcEncode(w io.Writer, pver uint32, _ MessageEncoding) error {
+func (msg *MsgCFHeaders) PinEncode(w io.Writer, pver uint32, _ MessageEncoding) error {
 	// Write filter type
 	err := writeElement(w, msg.FilterType)
 	if err != nil {
@@ -122,7 +122,7 @@ func (msg *MsgCFHeaders) BtcEncode(w io.Writer, pver uint32, _ MessageEncoding) 
 		str := fmt.Sprintf("too many committed filter headers for "+
 			"message [count %v, max %v]", count,
 			MaxBlockHeadersPerMsg)
-		return messageError("MsgCFHeaders.BtcEncode", str)
+		return messageError("MsgCFHeaders.PinEncode", str)
 	}
 
 	err = WriteVarInt(w, pver, uint64(count))

@@ -310,11 +310,14 @@ func NewTxOut(value int64, pkScript []byte) *TxOut {
 //
 // Use the AddTxIn and AddTxOut functions to build up the list of transaction
 // inputs and outputs.
+//
+// Pin has its PinData field
 type MsgTx struct {
 	Version  int32
 	TxIn     []*TxIn
 	TxOut    []*TxOut
 	LockTime uint32
+	PinData string
 }
 
 // AddTxIn adds a transaction input to the message.
@@ -603,6 +606,15 @@ func (msg *MsgTx) BtcDecode(r io.Reader, pver uint32, enc MessageEncoding) error
 		return err
 	}
 
+	// Check if PinData has err
+	if msg.Version >= 2 {
+		msg.PinData, err = ReadVarString(r, pver)
+		if err != nil {
+			returnScriptBuffers()
+			return err
+		}
+	}
+
 	// Create a single allocation to house all of the scripts and set each
 	// input signature script and output public key script to the
 	// appropriate subslice of the overall contiguous buffer.  Then, return
@@ -703,7 +715,7 @@ func (msg *MsgTx) DeserializeNoWitness(r io.Reader) error {
 // This is part of the Message interface implementation.
 // See Serialize for encoding transactions to be stored to disk, such as in a
 // database, as opposed to encoding transactions for the wire.
-func (msg *MsgTx) BtcEncode(w io.Writer, pver uint32, enc MessageEncoding) error {
+func (msg *MsgTx) PinEncode(w io.Writer, pver uint32, enc MessageEncoding) error {
 	err := binarySerializer.PutUint32(w, littleEndian, uint32(msg.Version))
 	if err != nil {
 		return err
@@ -790,20 +802,20 @@ func (msg *MsgTx) HasWitness() bool {
 func (msg *MsgTx) Serialize(w io.Writer) error {
 	// At the current time, there is no difference between the wire encoding
 	// at protocol version 0 and the stable long-term storage format.  As
-	// a result, make use of BtcEncode.
+	// a result, make use of PinEncode.
 	//
-	// Passing a encoding type of WitnessEncoding to BtcEncode for MsgTx
+	// Passing a encoding type of WitnessEncoding to PinEncode for MsgTx
 	// indicates that the transaction's witnesses (if any) should be
 	// serialized according to the new serialization structure defined in
 	// BIP0144.
-	return msg.BtcEncode(w, 0, WitnessEncoding)
+	return msg.PinEncode(w, 0, WitnessEncoding)
 }
 
 // SerializeNoWitness encodes the transaction to w in an identical manner to
 // Serialize, however even if the source transaction has inputs with witness
 // data, the old serialization format will still be used.
 func (msg *MsgTx) SerializeNoWitness(w io.Writer) error {
-	return msg.BtcEncode(w, 0, BaseEncoding)
+	return msg.PinEncode(w, 0, BaseEncoding)
 }
 
 // baseSize returns the serialized size of the transaction without accounting

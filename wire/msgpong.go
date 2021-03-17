@@ -36,13 +36,13 @@ func (msg *MsgPong) BtcDecode(r io.Reader, pver uint32, enc MessageEncoding) err
 
 // BtcEncode encodes the receiver to w using the bitcoin protocol encoding.
 // This is part of the Message interface implementation.
-func (msg *MsgPong) BtcEncode(w io.Writer, pver uint32, enc MessageEncoding) error {
+func (msg *MsgPong) PinEncode(w io.Writer, pver uint32, enc MessageEncoding) error {
 	// NOTE: <= is not a mistake here.  The BIP0031 was defined as AFTER
 	// the version unlike most others.
 	if pver <= BIP0031Version {
 		str := fmt.Sprintf("pong message invalid for protocol "+
 			"version %d", pver)
-		return messageError("MsgPong.BtcEncode", str)
+		return messageError("MsgPong.PinEncode", str)
 	}
 
 	return writeElement(w, msg.Nonce)

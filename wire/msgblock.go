@@ -108,7 +108,7 @@ func (msg *MsgBlock) Deserialize(r io.Reader) error {
 	// at protocol version 0 and the stable long-term storage format.  As
 	// a result, make use of BtcDecode.
 	//
-	// Passing an encoding type of WitnessEncoding to BtcEncode for the
+	// Passing an encoding type of WitnessEncoding to PinEncode for the
 	// MessageEncoding parameter indicates that the transactions within the
 	// block are expected to be serialized according to the new
 	// serialization structure defined in BIP0141.
@@ -173,7 +173,7 @@ func (msg *MsgBlock) DeserializeTxLoc(r *bytes.Buffer) ([]TxLoc, error) {
 // This is part of the Message interface implementation.
 // See Serialize for encoding blocks to be stored to disk, such as in a
 // database, as opposed to encoding blocks for the wire.
-func (msg *MsgBlock) BtcEncode(w io.Writer, pver uint32, enc MessageEncoding) error {
+func (msg *MsgBlock) PinEncode(w io.Writer, pver uint32, enc MessageEncoding) error {
 	err := writeBlockHeader(w, pver, &msg.Header)
 	if err != nil {
 		return err
@@ -185,7 +185,7 @@ func (msg *MsgBlock) BtcEncode(w io.Writer, pver uint32, enc MessageEncoding) er
 	}
 
 	for _, tx := range msg.Transactions {
-		err = tx.BtcEncode(w, pver, enc)
+		err = tx.PinEncode(w, pver, enc)
 		if err != nil {
 			return err
 		}
@@ -206,12 +206,12 @@ func (msg *MsgBlock) BtcEncode(w io.Writer, pver uint32, enc MessageEncoding) er
 func (msg *MsgBlock) Serialize(w io.Writer) error {
 	// At the current time, there is no difference between the wire encoding
 	// at protocol version 0 and the stable long-term storage format.  As
-	// a result, make use of BtcEncode.
+	// a result, make use of PinEncode.
 	//
 	// Passing WitnessEncoding as the encoding type here indicates that
 	// each of the transactions should be serialized using the witness
 	// serialization structure defined in BIP0141.
-	return msg.BtcEncode(w, 0, WitnessEncoding)
+	return msg.PinEncode(w, 0, WitnessEncoding)
 }
 
 // SerializeNoWitness encodes a block to w using an identical format to
@@ -220,7 +220,7 @@ func (msg *MsgBlock) Serialize(w io.Writer) error {
 // allow one to selectively encode transaction witness data to non-upgraded
 // peers which are unaware of the new encoding.
 func (msg *MsgBlock) SerializeNoWitness(w io.Writer) error {
-	return msg.BtcEncode(w, 0, BaseEncoding)
+	return msg.PinEncode(w, 0, BaseEncoding)
 }
 
 // SerializeSize returns the number of bytes it would take to serialize the

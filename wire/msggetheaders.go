@@ -82,13 +82,13 @@ func (msg *MsgGetHeaders) BtcDecode(r io.Reader, pver uint32, enc MessageEncodin
 
 // BtcEncode encodes the receiver to w using the bitcoin protocol encoding.
 // This is part of the Message interface implementation.
-func (msg *MsgGetHeaders) BtcEncode(w io.Writer, pver uint32, enc MessageEncoding) error {
+func (msg *MsgGetHeaders) PinEncode(w io.Writer, pver uint32, enc MessageEncoding) error {
 	// Limit to max block locator hashes per message.
 	count := len(msg.BlockLocatorHashes)
 	if count > MaxBlockLocatorsPerMsg {
 		str := fmt.Sprintf("too many block locator hashes for message "+
 			"[count %v, max %v]", count, MaxBlockLocatorsPerMsg)
-		return messageError("MsgGetHeaders.BtcEncode", str)
+		return messageError("MsgGetHeaders.PinEncode", str)
 	}
 
 	err := writeElement(w, msg.ProtocolVersion)
