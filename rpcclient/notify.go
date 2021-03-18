@@ -183,19 +183,19 @@ type NotificationHandlers struct {
 	// pind.
 	//
 	// This will only be available when client is connected to a wallet
-	// server such as btcwallet.
+	// server such as pinwallet.
 	OnPindConnected func(connected bool)
 
 	// OnAccountBalance is invoked with account balance updates.
 	//
 	// This will only be available when speaking to a wallet server
-	// such as btcwallet.
+	// such as pinwallet.
 	OnAccountBalance func(account string, balance pinutil.Amount, confirmed bool)
 
 	// OnWalletLockState is invoked when a wallet is locked or unlocked.
 	//
 	// This will only be available when client is connected to a wallet
-	// server such as btcwallet.
+	// server such as pinwallet.
 	OnWalletLockState func(locked bool)
 
 	// OnUnknownNotification is invoked when an unrecognized notification
@@ -776,7 +776,7 @@ func parseTxAcceptedVerboseNtfnParams(params []json.RawMessage) (*pinjson.TxRawR
 }
 
 // parsePindConnectedNtfnParams parses out the connection status of pind
-// and btcwallet from the parameters of a pindconnected notification.
+// and pinwallet from the parameters of a pindconnected notification.
 func parsePindConnectedNtfnParams(params []json.RawMessage) (bool, error) {
 	if len(params) != 1 {
 		return false, wrongNumParams(len(params))

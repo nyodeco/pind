@@ -13,10 +13,10 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/nyodeco/pinutil"
 	flags "github.com/jessevdk/go-flags"
-	"github.com/nyodeco/pind/pinjson"
 	"github.com/nyodeco/pind/chaincfg"
+	"github.com/nyodeco/pind/pinjson"
+	"github.com/nyodeco/pinutil"
 )
 
 const (
@@ -29,11 +29,11 @@ const (
 var (
 	pindHomeDir           = pinutil.AppDataDir("pind", false)
 	pinctlHomeDir         = pinutil.AppDataDir("pinctl", false)
-	btcwalletHomeDir      = pinutil.AppDataDir("btcwallet", false)
+	pinwalletHomeDir      = pinutil.AppDataDir("pinwallet", false)
 	defaultConfigFile     = filepath.Join(pinctlHomeDir, "pinctl.conf")
 	defaultRPCServer      = "localhost"
 	defaultRPCCertFile    = filepath.Join(pindHomeDir, "rpc.cert")
-	defaultWalletCertFile = filepath.Join(btcwalletHomeDir, "rpc.cert")
+	defaultWalletCertFile = filepath.Join(pinwalletHomeDir, "rpc.cert")
 )
 
 // listCommands categorizes and lists all of the usable commands along with
@@ -132,8 +132,8 @@ func normalizeAddress(addr string, chain *chaincfg.Params, useWallet bool) (stri
 			}
 		case &chaincfg.RegressionNetParams:
 			if useWallet {
-				// TODO: add port once regtest is supported in btcwallet
-				paramErr := fmt.Errorf("cannot use -wallet with -regtest, btcwallet not yet compatible with regtest")
+				// TODO: add port once regtest is supported in pinwallet
+				paramErr := fmt.Errorf("cannot use -wallet with -regtest, pinwallet not yet compatible with regtest")
 				return "", paramErr
 			} else {
 				defaultPort = "18334"
@@ -224,7 +224,7 @@ func loadConfig() (*config, []string, error) {
 		// Use config file for RPC server to create default pinctl config
 		var serverConfigPath string
 		if preCfg.Wallet {
-			serverConfigPath = filepath.Join(btcwalletHomeDir, "btcwallet.conf")
+			serverConfigPath = filepath.Join(pinwalletHomeDir, "pinwallet.conf")
 		} else {
 			serverConfigPath = filepath.Join(pindHomeDir, "pind.conf")
 		}
@@ -303,7 +303,7 @@ func loadConfig() (*config, []string, error) {
 
 // createDefaultConfig creates a basic config file at the given destination path.
 // For this it tries to read the config file for the RPC server (either pind or
-// btcwallet), and extract the RPC user and password from it.
+// pinwallet), and extract the RPC user and password from it.
 func createDefaultConfigFile(destinationPath, serverConfigPath string) error {
 	// Read the RPC server config
 	serverConfigFile, err := os.Open(serverConfigPath)

@@ -608,7 +608,7 @@ Changes in 0.9.0 (Sat Sep 20 2014)
       as height (https://github.com/conformal/pind/issues/151)
   - pinctl utility changes:
     - Accept --simnet flag which automatically selects the appropriate port
-      and TLS certificates needed to communicate with pind and btcwallet on
+      and TLS certificates needed to communicate with pind and pinwallet on
       the simulation test network
     - Fix createrawtransaction command to send amounts denominated in BTC
     - Add estimatefee command
@@ -620,7 +620,7 @@ Changes in 0.9.0 (Sat Sep 20 2014)
     - Add signrawtransaction command
   - addblock utility changes:
     - Accept --simnet flag which automatically selects the appropriate port
-      and TLS certificates needed to communicate with pind and btcwallet on
+      and TLS certificates needed to communicate with pind and pinwallet on
       the simulation test network
   - Notable developer-related package changes:
     - Provide a new bloom package in pinutil which allows creating and
@@ -730,7 +730,7 @@ Changes in 0.8.0-beta (Sun May 25 2014)
     - Add setgenerate command
     - Accept --testnet and --wallet flags which automatically select
       the appropriate port and TLS certificates needed to communicate
-      with pind and btcwallet (https://github.com/conformal/pind/issues/112)
+      with pind and pinwallet (https://github.com/conformal/pind/issues/112)
     - Allow path expansion from config file entries
       (https://github.com/conformal/pind/issues/113)
     - Minor refactor simplify handling of options

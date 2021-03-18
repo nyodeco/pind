@@ -1,5 +1,5 @@
 # Wallet
 
 pind was intentionally developed without an integrated wallet for security
-reasons.  Please see [btcwallet](https://github.com/btcsuite/btcwallet) for more
+reasons.  Please see [pinwallet](https://github.com/btcsuite/pinwallet) for more
 information.

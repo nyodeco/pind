@@ -37,7 +37,7 @@ differences between pind and bitcoind as far as how RPCs are serviced:
   further details on why they were separated.  This means that if you are
   talking directly to pind, only chain-related RPCs are available.  However both
   chain-related and wallet-related RPCs are available via
-  [btcwallet](https://github.com/btcsuite/btcwallet).
+  [pinwallet](https://github.com/btcsuite/pinwallet).
 * pind is secure by default which means that the RPC connection is TLS-enabled
   by default
 * pind provides access to the API through both
@@ -45,14 +45,14 @@ differences between pind and bitcoind as far as how RPCs are serviced:
   [Websockets](http://en.wikipedia.org/wiki/WebSocket)
 
 Websockets are the preferred transport for pind RPC and are used by applications
-such as [btcwallet](https://github.com/btcsuite/btcwallet) for inter-process
+such as [pinwallet](https://github.com/btcsuite/pinwallet) for inter-process
 communication with pind.  The websocket connection endpoint for pind is
 `wss://your_ip_or_domain:8334/ws`.
 
 In addition to the [standard API](#Methods), an [extension API](#WSExtMethods)
 has been developed that is exclusive to clients using Websockets. In its current
 state, this API attempts to cover features found missing in the standard API
-during the development of btcwallet.
+during the development of pinwallet.
 
 While the [standard API](#Methods) is stable, the
 [Websocket extension API](#WSExtMethods) should be considered a work in
@@ -373,7 +373,7 @@ the method name for further details such as parameter and return information.
 |Method|getinfo|
 |Parameters|None|
 |Description|Returns a JSON object containing various state info.|
-|Notes|NOTE: Since pind does NOT contain wallet functionality, wallet-related fields are not returned.  See getinfo in btcwallet for a version which includes that information.|
+|Notes|NOTE: Since pind does NOT contain wallet functionality, wallet-related fields are not returned.  See getinfo in pinwallet for a version which includes that information.|
 |Returns|`{ (json object)`<br />&nbsp;&nbsp;`"version": n,  (numeric) the version of the server`<br />&nbsp;&nbsp;`"protocolversion": n,  (numeric) the latest supported protocol version`<br />&nbsp;&nbsp;`"blocks": n,  (numeric) the number of blocks processed`<br />&nbsp;&nbsp;`"timeoffset": n,  (numeric) the time offset`<br />&nbsp;&nbsp;`"connections": n,  (numeric) the number of connected peers`<br />&nbsp;&nbsp;`"proxy": "host:port",  (string) the proxy used by the server`<br />&nbsp;&nbsp;`"difficulty": n.nn,  (numeric) the current target difficulty`<br />&nbsp;&nbsp;`"testnet": true or false,  (boolean) whether or not server is using testnet`<br />&nbsp;&nbsp;`"relayfee": n.nn,  (numeric) the minimum relay fee for non-free transactions in BTC/KB`<br />`}`|
 |Example Return|`{`<br />&nbsp;&nbsp;`"version": 70000`<br />&nbsp;&nbsp;`"protocolversion": 70001,  `<br />&nbsp;&nbsp;`"blocks": 298963,`<br />&nbsp;&nbsp;`"timeoffset": 0,`<br />&nbsp;&nbsp;`"connections": 17,`<br />&nbsp;&nbsp;`"proxy": "",`<br />&nbsp;&nbsp;`"difficulty": 8000872135.97,`<br />&nbsp;&nbsp;`"testnet": false,`<br />&nbsp;&nbsp;`"relayfee": 0.00001,`<br />`}`|
 [Return to Overview](#MethodOverview)<br />

@@ -35,7 +35,8 @@ FROM $ARCH/alpine:3.12
 COPY --from=build-container /go/bin /bin
 
 VOLUME ["/root/.pind"]
+VOLUME ["/root/.pinctl"]
 
-EXPOSE 8333 8334
+EXPOSE 7312 8334
 
 ENTRYPOINT ["pind"]

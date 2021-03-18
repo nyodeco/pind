@@ -2828,6 +2828,6 @@ func (c *Client) LoadWallet(walletName string) (*pinjson.LoadWalletResult, error
 }
 
 // TODO(davec): Implement
-// encryptwallet (Won't be supported by btcwallet since it's always encrypted)
-// listaddressgroupings (NYI in btcwallet)
-// listreceivedbyaccount (NYI in btcwallet)
+// encryptwallet (Won't be supported by pinwallet since it's always encrypted)
+// listaddressgroupings (NYI in pinwallet)
+// listreceivedbyaccount (NYI in pinwallet)

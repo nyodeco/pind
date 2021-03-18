@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  pind:
+    container_name: pind
+    hostname: pind
+    image: pind-build
+    restart: unless-stopped
+    volumes:
+      - pind-data:/root/.pind
+      - pinctl-data:/root/.pinctl
+    ports:
+      - 7312:7312
+      - 8334:8334
+    command: [
+        "--rpcuser=oipd",
+        "--rpcpass=oippass",
+        "--txindex",
+        "--addrindex",
+        "--listen=0.0.0.0"
+
+    ]
+
+volumes:
+  pind-data:
+  pinctl-data:
