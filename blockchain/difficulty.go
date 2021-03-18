@@ -156,10 +156,12 @@ func CalcWork(bits uint32) *big.Int {
 // can have given starting difficulty bits and a duration.  It is mainly used to
 // verify that claimed proof of work by a block is sane as compared to a
 // known good checkpoint.
+// TODO why?
 func (b *BlockChain) calcEasiestDifficulty(bits uint32, duration time.Duration) uint32 {
+	return b.chainParams.PowLimitBits
 	// Convert types used in the calculations below.
 	durationVal := int64(duration / time.Second)
-	adjustmentFactor := big.NewInt(b.chainParams.RetargetAdjustmentFactor)
+	adjustmentFactor := big.NewInt(100 - b.chainParams.RetargetAdjustmentFactorUp)
 
 	// The test network rules allow minimum difficulty blocks after more
 	// than twice the desired amount of time needed to generate a block has
@@ -179,6 +181,7 @@ func (b *BlockChain) calcEasiestDifficulty(bits uint32, duration time.Duration) 
 	newTarget := CompactToBig(bits)
 	for durationVal > 0 && newTarget.Cmp(b.chainParams.PowLimit) < 0 {
 		newTarget.Mul(newTarget, adjustmentFactor)
+		newTarget.Div(newTarget, big.NewInt(100))
 		durationVal -= b.maxRetargetTimespan
 	}
 
@@ -224,9 +227,14 @@ func (b *BlockChain) calcNextRequiredDifficulty(lastNode *blockNode, newBlockTim
 		return b.chainParams.PowLimitBits, nil
 	}
 
+	// If PowNoRetargeting is set to true (regtest), then return the last blocks bits
+	if b.chainParams.PowNoRetargeting {
+		return lastNode.bits, nil
+	}
+
 	// Return the previous block's difficulty requirements if this block
 	// is not at a difficulty retarget interval.
-	if (lastNode.height+1)%b.blocksPerRetarget != 0 {
+	if (lastNode.height+1)%b.retargetInterval != 0 {
 		// For networks that support it, allow special reduction of the
 		// required difficulty once too much time has elapsed without
 		// mining a block.
@@ -253,7 +261,7 @@ func (b *BlockChain) calcNextRequiredDifficulty(lastNode *blockNode, newBlockTim
 
 	// Get the block node at the previous retarget (targetTimespan days
 	// worth of blocks).
-	firstNode := lastNode.RelativeAncestor(b.blocksPerRetarget - 1)
+	firstNode := lastNode.RelativeAncestor(b.blocksPerRetarget)
 	if firstNode == nil {
 		return 0, AssertError("unable to obtain previous retarget block")
 	}
